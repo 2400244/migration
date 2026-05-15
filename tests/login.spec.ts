@@ -13,12 +13,17 @@ import { test, expect } from '../fixtures/base';
 test.describe('Login', () => {
   
   test('Verify valid credentials allow successful login', async ({ loginPage, homePage }) => {
+    // Increase timeout for this test to handle slower CI environments
+    test.setTimeout(60000);
+    
     // Use loginPage to perform login with page object method
     await loginPage.login('valid_user', 'valid_pass');
     
-    // Assert home page indicator is visible using HomePage method
-    const homePageText = await homePage.getHomePageText();
-    await expect(homePage.page.locator('#app header span h6')).toBeVisible();
+    // Assert home page indicator is visible using HomePage method with explicit wait
+    await homePage.page.waitForLoadState('networkidle');
+    const homePageLocator = homePage.page.locator('#app header span h6');
+    await homePageLocator.waitFor({ state: 'visible', timeout: 15000 });
+    await expect(homePageLocator).toBeVisible();
   });
 
 });
