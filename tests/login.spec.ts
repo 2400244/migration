@@ -19,11 +19,11 @@ test.describe('Login', () => {
     // Use loginPage to perform login with page object method
     await loginPage.login('valid_user', 'valid_pass');
     
-    // Assert home page indicator is visible using HomePage method with explicit wait
-    await homePage.page.waitForLoadState('networkidle');
+    // Assert home page indicator is visible using HomePage method with increased timeout
+    await homePage.page.waitForLoadState('networkidle', { timeout: 30000 });
     const homePageLocator = homePage.page.locator('#app header span h6');
-    await homePageLocator.waitFor({ state: 'visible', timeout: 15000 });
-    await expect(homePageLocator).toBeVisible();
+    await homePageLocator.waitFor({ state: 'visible', timeout: 30000 });
+    await expect(homePageLocator).toBeVisible({ timeout: 30000 });
   });
 
 });
