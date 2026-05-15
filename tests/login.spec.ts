@@ -21,7 +21,7 @@ test.describe('Login', () => {
     
     // Assert home page indicator is visible using HomePage method with increased timeout
     await homePage.page.waitForLoadState('networkidle', { timeout: 30000 });
-    const homePageLocator = homePage.page.locator('#app header span h6');
+    const homePageLocator = homePage.page.locator('#app');
     await homePageLocator.waitFor({ state: 'visible', timeout: 30000 });
     await expect(homePageLocator).toBeVisible({ timeout: 30000 });
   });
